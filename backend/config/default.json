@@ -1,0 +1,5 @@
+{
+  "PORT": 2390,
+  "DB_URL": "mongodb://localhost:27017/Kripto",
+  "HESHER": "ISBDIASDdasdo3234234_asdad12312"
+}

@@ -1,0 +1,113 @@
+.ticet-container{
+    flex-basis: 0;
+    flex-grow: 999;
+    height: 100%;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+.table-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 330px;
+}
+
+.ticets-new {
+    min-width: 330px;
+}
+
+.table-wrap {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.ticet-container table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    min-width: 325px;
+}
+
+.ticet-container table th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.ticet-container table th:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+.ticet-container table > * {
+    width: 100%;
+}
+
+.ticet-container table tbody th:last-child {
+    border-radius: 0 0 20px 20px;
+    background-color: #000000;
+}
+
+.ticet-container table tbody:last-child {
+    padding: 5px;
+}
+
+.ticet-container table th, table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.ticet-container table th {
+    color: #fff;
+    background-color: rgba(167, 242, 173, .5);
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+@media screen and (max-width: 980px) {
+    .ticet-container table {
+        border: 0;
+    }
+
+    .ticet-container table thead {
+        display: none;
+    }
+
+    .ticet-container table tr {
+        margin-bottom: 10px;
+        display: block;
+        border: 1px solid #707070;
+        border-radius: 20px;
+        background-color: rgba(163, 179, 62, .5);
+    }
+
+    .ticet-container table td {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        align-items: center;
+        border-bottom: 1px dotted #ccc;
+        border-right: 1px solid transparent;
+    }
+
+    .ticet-container table td:last-child {
+        border-bottom: 0;
+    }
+
+    .ticet-container table td:before {
+        content: attr(data-label);
+        float: left;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+}
+
+.pagination-box {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.pagination-box ul {
+    width: unset !important;
+}

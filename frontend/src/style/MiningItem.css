@@ -1,0 +1,72 @@
+.left-container {
+    width: 100%;
+    border-radius: 40px;
+}
+
+.balance-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.balance-container img{
+    width: 15px;
+    height: 15px;
+    margin: 5px;
+}
+
+.balance-container span{
+    display: inline-flex;
+    align-items: center;
+    margin: 5px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.mining-block{
+    display: flex;
+    width: 47%;
+    margin: 10px;
+    border: 1px solid black;
+    box-shadow: 0 3px 10px #000000;
+    background: rgba(168, 189, 126, .5);
+    border-radius: 50px;
+    padding: 15px;
+}
+
+.range-container {
+    display: flex;
+    align-items: center;
+}
+
+.range-container span{
+    margin-left: 15px;
+}
+
+.mining-btn{
+    display: flex;
+    justify-content: space-around;
+}
+
+.mining-btn a{
+    font-size: .5em;
+}
+
+.mining-btn a {
+    border-radius: 20px;
+    color: #ffffff;
+    border: 1px solid #707070;
+}
+
+.mining-btn a:first-child {
+    background: #3D8B2B;
+}
+
+.mining-btn a:last-child {
+    background: #006400;
+}
+
+@media screen and (max-width: 980px){
+    .mining-block {
+        width: 100%;
+    }
+}

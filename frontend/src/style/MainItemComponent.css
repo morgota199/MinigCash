@@ -1,0 +1,49 @@
+.main-pay-container {
+    display: flex;
+    height: 100%;
+}
+
+.main-pay-block {
+    width: 100%;
+}
+
+.pay-collection-container {
+    width: 50%;
+    border: none;
+}
+
+.pay-collection-container > * {
+    border-bottom: 1px solid #707070 !important;
+    color: #000000;
+}
+
+.pay-collection {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media screen and (min-width: 992px){
+    .main-pay-container {
+        max-width: 500px;
+    }
+
+    .main-pay-block {
+        max-width: 500px;
+        flex-direction: column;
+    }
+}
+
+.pay-left-collection {
+    border-radius: 20px 0 0 20px;
+    border-left: 2px solid #000000 !important;
+}
+
+.pay-right-collection {
+    border-radius: 0 20px 20px 0;
+    border-left: 1px solid #707070 !important;
+    border-right: 2px solid #000000 !important;
+}
+
+.collection-item {
+    background-color: #A3B33E;
+}

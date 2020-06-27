@@ -1,0 +1,41 @@
+.ticets-tools-item {
+    margin: 10px;
+    border: 3px solid #036510;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.logo-user {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name {
+    justify-content: space-around;
+    width: 100%;
+}
+
+.redact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.redact > .input-container {
+    width: 100%;
+}
+
+.answer-yes {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-answer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.answer-yes > span {
+    width: 100%;
+}

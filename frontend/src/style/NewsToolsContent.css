@@ -1,0 +1,40 @@
+.admin-news-page .page-news{
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.admin-news-page {
+    min-width: 330px;
+}
+
+.admin-news-page .page-news .collapsible {
+    width: 100%;
+}
+
+.page-news .pagination-box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.news-admin-title-box{
+    display: flex;
+    justify-content: space-between;
+}
+
+.news-admin-title-box-controller{
+    display: flex;
+}
+
+.redact-controller-font {
+    display: flex;
+    margin: 10px;
+}
+
+textarea {
+    border: none;
+}
+
+.admin-news-page .pay-btn{
+    margin: 10px;
+}

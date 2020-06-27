@@ -1,0 +1,25 @@
+.balance {
+    background-color: #D2F5CE;
+    border: 1px solid #094004;
+    padding: 10px;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    font-weight: bolder;
+    color: #000000;
+}
+
+.val{
+    margin-right: 10px;
+}
+
+.balance img {
+    height: 10px;
+    width: 10px;
+    margin-right: 5px;
+}

@@ -1,0 +1,132 @@
+.pay > * {
+    width: 100%;
+}
+
+.table-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.table-wrap {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    /*min-width: 225px;*/
+}
+
+table > * {
+    width: 100%;
+}
+
+table > thead {
+    background-color: #A3B33E;
+}
+
+table > thead > tr {
+    border-radius: 0 20px 20px 0;
+}
+
+table > tbody > tr {
+    background-color: rgba(242,242,242,0.5);
+}
+
+table > thead > tr > th:first-child{
+    border-radius: 20px 0 0 0;
+}
+
+table > thead > tr > th:last-child{
+    border-radius: 0 20px 0 0 ;
+}
+
+table > tbody:last-child > tr > th:first-child{
+    border-radius: 0 0 0 20px;
+}
+
+table > tbody:last-child > tr > th:last-child{
+    border-radius:  0 0 20px 0 ;
+}
+
+table tbody:last-child {
+    padding: 5px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: center;
+}
+
+table td a {
+    color: #000000;
+}
+
+table th {
+    color: #fff;
+    background-color: rgba(167, 242, 173, .5);
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+
+@media screen and (max-width: 980px) {
+    table {
+        border: 0;
+    }
+    table thead {
+        display: none;
+    }
+    table tr {
+        margin-bottom: 10px;
+        display: block;
+        border: 1px solid #707070;
+        border-radius: 20px;
+        background-color: rgba(242,242,242,0.5)
+    }
+    table td {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        align-items: center;
+        border-bottom: 1px dotted #ccc;
+        border-right: 1px solid transparent;
+    }
+    table td:last-child {
+        border-bottom: 0;
+    }
+    table td:before {
+        content: attr(data-label);
+        float: left;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+}
+
+.pagination-box {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+
+.pagination-box ul {
+    width: unset !important;
+}
+
+.id-pay p {
+    text-overflow: ellipsis !important;
+    -o-text-overflow: ellipsis !important;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.pay-info-static {
+    display: flex;
+    justify-content: space-around;
+    margin: 12px 0;
+}

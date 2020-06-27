@@ -1,0 +1,151 @@
+.user-item {
+    margin-top: 36px;
+    min-width: 320px;
+}
+
+.user-item > .title {
+    font-size: 24px;
+}
+
+.control {
+    display: flex;
+    align-items: center;
+}
+
+.control > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    margin: 10px 5px;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.control > span:hover {
+    transform: scale(1.5, 1.5);
+}
+
+.control > span:hover:after {
+    content: attr(data-title);
+    position: absolute;
+    right: 50%;
+    top: 100%;
+    z-index: 1;
+    background-color: rgba(210, 245, 206, .5);
+    border-radius: 20px;
+    font-size: 11px;
+    padding: 5px 10px;
+    border: 1px solid #707070;
+}
+
+.control > span > i {
+    color: #000000;
+}
+
+.user-selector {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    align-items: flex-start;
+}
+
+.user-selector > .blank {
+    margin: 20px;
+    flex-basis: 0;
+    flex-grow: 999;
+    min-width: 225px;
+}
+
+.user-selector > .blank > .striped {
+    min-width: 225px !important;
+}
+
+
+
+.user-selector > .search-user-menu {
+    border-radius: 20px;
+    background-color: #D2F5CE !important;
+    align-items: center;
+}
+
+.user-selector > .search-user-menu .collection-item {
+    border-bottom: none;
+    background-color: #D2F5CE;
+    margin: 5px;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.user-selector > .search-user-menu .collection-item:hover,
+    .user-selector > .search-user-menu > .active > li{
+    background-color: #85E896;
+    border-radius: 20px;
+}
+
+.user-selector > .search-user-menu a {
+    color: #000000;
+}
+
+.user-selector > .search-user-menu a:hover {
+    color: #0E6E05;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.name-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.name-info .name > span {
+    margin: 10px;
+}
+
+.name {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+}
+
+.search-users-container {
+    flex-basis: 20rem;
+    flex-grow: 1;
+    background-color: #85E896;
+    border-radius: 20px;
+}
+
+.search-user-menu {
+    padding: 15px !important;
+}
+
+.search-user-menu > a{
+    color: #000000;
+}
+
+.search-user-menu > a > li{
+    padding: 15px;
+    transition: .3s;
+}
+
+.search-user-menu > a > li:hover{
+    border-radius: 20px;
+    background-color: #D2F5CE;
+
+}
+
+@media screen and (max-width: 790px){
+    .name-info{
+        justify-content: center;
+    }
+
+    .name {
+        justify-content: center;
+    }
+}

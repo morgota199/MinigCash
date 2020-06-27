@@ -1,0 +1,44 @@
+canvas {
+    width: 100% !important;
+}
+
+/*.statistic {*/
+/*    overflow: auto !important;*/
+/*}*/
+
+.statistic input {
+    text-align: center;
+}
+
+.calendar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    transition: 1s;
+    margin: 10px;
+}
+
+.statistic .datepicker-modal{
+    max-height: 80vh;
+}
+
+.selected {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.selected button {
+    border-radius: 20px;
+    background-color: #094004;
+    border: #A3B33E;
+}
+
+.selected button:hover {
+    background-color: #094004;
+}
+
+/*.statistic .modal {*/
+/*    position: relative;*/
+/*    top: 0;*/
+/*}*/

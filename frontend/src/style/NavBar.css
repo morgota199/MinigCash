@@ -1,0 +1,65 @@
+nav {
+    background: #A3B33E;
+    color: #000000;
+    position: relative;
+    top: 0;
+    left: 0;
+    min-width: 325px;
+}
+
+.nav-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-wrapper{
+    margin: 15px;
+    font-size: 2em;
+}
+
+.logo-box{
+    display: flex;
+    align-items: center;
+}
+
+.mining {
+    display: flex;
+    align-items: center;
+    border: 3px solid #094004;
+    height: 1.4em;
+}
+
+.nav-selector li a{
+    color: #000000;
+}
+
+.nav-login {
+    border: 1px solid #000000;
+    border-radius: 20px;
+}
+
+.nav-login a {
+    color: #ffffff;
+}
+
+.mobile-sidenav{
+    display: none;
+}
+
+@media only screen and (max-width: 1050px) {
+    .mobile-sidenav {
+        display: block;
+    }
+
+    .nav-wrapper{
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 1050px){
+    .hide-on-med-and-down {
+        display: none !important;
+    }
+}

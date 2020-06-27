@@ -1,0 +1,44 @@
+.page-news {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.news-wrapper h1 {
+    font-size: 3em;
+}
+
+.news-wrapper {
+    display: flex;
+    width: 70%;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.collapsible {
+    border-radius: 20px;
+}
+
+
+.collapsible li .collapsible-header{
+    background-color: #A3B33E !important;
+}
+
+.collapsible li:first-child > div{
+    border-radius: 20px 20px 0 0 ;
+}
+
+.collapsible li:last-child > div{
+    border-radius: 0 0 20px 20px;
+}
+
+.collapsible:last-child:first-child{
+    border-radius: 0 0 20px 20px ;
+}
+
+.news-admin-text-placeholder{
+    text-align: left;
+}

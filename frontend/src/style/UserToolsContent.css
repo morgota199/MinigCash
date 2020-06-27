@@ -1,0 +1,14 @@
+.submit-search > button {
+    background-color: #3D8B2B;
+    border-radius: 20px;
+    border: 1px solid #A3B33E;
+    margin: 10px;
+}
+
+.submit-search > button:hover {
+    background-color: #A3B33E !important;
+}
+
+.submit-search > button > i {
+    position: relative !important;
+}

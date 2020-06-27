@@ -1,0 +1,10 @@
+.sidebar-container {
+    flex-basis: 20rem;
+    flex-grow: 1;
+    background-color: #A8BD7E;
+    min-width: 325px;
+}
+
+.sidebar {
+    padding: 15px;
+}

@@ -1,0 +1,37 @@
+.menu-user {
+    background-color: #D2F5CE;
+    border-radius: 20px;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.menu-user a {
+    background-color: #D2F5CE !important;
+}
+
+.menu-user .active {
+    background-color: #99F2A2 !important;
+    border-radius: 20px;
+    border: 1px solid #707070 !important;
+    color: #094004 !important;
+}
+
+.menu-user .collection-item {
+    border: none;
+    margin: 5px;
+    display: flex !important;
+    align-items: center;
+    color: #000000 !important;
+}
+
+.menu-user .collection-item:hover {
+    background-color: #85E896 !important;
+    border-radius: 20px;
+    color: #0E6E05 !important;
+}
+
+.menu-user .collection-item img{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
