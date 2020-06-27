@@ -136,6 +136,7 @@ export const AuthPage = () => {
         } catch (e) {}
     };
 
+
     return (
         <div className="auth-container" style={
             {
