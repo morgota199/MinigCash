@@ -4,16 +4,18 @@ import {User} from "../../schemas/user.schemas";
 import {Model} from "mongoose";
 import {hash, compare} from "bcrypt";
 import {InjectModel} from "@nestjs/mongoose";
-import {ErrorDto} from "../dto/error_dto";
+import {ErrorDto} from "../../dto/error_dto";
 import {JwtService} from "@nestjs/jwt";
 import {TokenDto} from "../dto/token_dto";
+import {MiningService} from "../../mining/service/mining.service";
 
 @Injectable()
 export class AuthService {
     constructor(
         @InjectModel("User")
         private userModel: Model<User>,
-        private jwtService: JwtService
+        private jwtService: JwtService,
+        private miningService: MiningService
     ) {}
 
     async register(user: CreateUserDto): Promise<User | ErrorDto> {
@@ -58,7 +60,11 @@ export class AuthService {
             }
         })
 
-        return person.save()
+        await person.save()
+
+        this.miningService.mining(person.id)
+
+        return person
     }
 
     async login(user: CreateUserDto): Promise<TokenDto | ErrorDto> {

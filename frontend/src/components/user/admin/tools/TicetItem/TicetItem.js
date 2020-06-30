@@ -2,9 +2,10 @@ import React, {useContext, useEffect, useState} from "react";
 import {AuthContext, TicetContext} from "../../../../../context/auth.context";
 import {useHttp} from "../../../../../hooks/http.hook";
 import {useMessage} from "../../../../../hooks/message.hook";
+import path from "../../../../../path.config";
 
 export const TicetItem = (props) => {
-    const { token } = useContext(AuthContext),
+    const { token, userName } = useContext(AuthContext),
         {ticet, setTicet} = useContext(TicetContext);
 
     const { request } = useHttp(),
@@ -28,9 +29,7 @@ export const TicetItem = (props) => {
     };
 
     const removeHandler = async () => {
-        const candidate = ticet.filter(i => props.id === i.id);
-
-        const data = await request("/remove-ticet", "POST", {candidate}, {token});
+        const data = await request(`${path.ticket}/${props.id}`, "DELETE", null, {"Authorization": `Bearer ${token}`});
 
         message(data.message);
 
@@ -40,10 +39,18 @@ export const TicetItem = (props) => {
 
     const sendHandler = async () => {
         try {
-            const data = await request("/update-ticet", "POST", { ticet: props, answer }, { token }),
-                newTicetData = await request("/all-ticet-admin", "POST", null, {token});
+            const data = await request(`${path.ticket}/${props.id}`, "PUT", {
+                    username: userName,
+                    email: props.email,
+                    question: props.question,
+                    theme: props.theme,
+                    answer: answer,
+                    state: props.state,
+                    date: props.date
+                }, {"Authorization": `Bearer ${token}`}),
+                newTicetData = await request(path.ticket, "GET");
 
-            const ticetData = newTicetData.ticet.map((i, n) => {return {id: n, ...i}});
+            const ticetData = newTicetData.map(i => {return {id: i._id, ...i}});
 
             if(screenMy === "flex") setScreenMy("none");
 
@@ -53,7 +60,9 @@ export const TicetItem = (props) => {
             setAnswer(null);
 
             return message(data.message);
-        } catch (e) {}
+        } catch (e) {
+            console.log(e.message)
+        }
     };
 
     useEffect(() => {

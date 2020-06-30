@@ -63,7 +63,6 @@ export const usePagination = () => {
     }, [count, setCount])
 
     useEffect(() => {
-        console.log(indicators)
         setIndicators(ind => {
             return ind.map(i => {
                 if(+i.key === count){

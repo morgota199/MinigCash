@@ -247,17 +247,17 @@ body, html {
 /*    flex-direction: column;*/
 /*}*/
 
-/*.ticets-new{*/
+/*.tickets-new{*/
 /*    display: flex;*/
 /*    flex-direction: column;*/
 /*    justify-content: center;*/
 /*}*/
 
-/*.ticets-submit-button-container{*/
+/*.tickets-submit-button-container{*/
 /*    text-align: center;*/
 /*}*/
 
-/*.ticets-all{*/
+/*.tickets-all{*/
 /*    width: 100%;*/
 /*    overflow-y: auto;*/
 /*    box-shadow: 3px 3px 10px #000000;*/
@@ -282,7 +282,7 @@ body, html {
 /*    width: 100%;*/
 /*}*/
 
-/*.ticets-all-admin{*/
+/*.tickets-all-admin{*/
 /*    padding: 10px;*/
 /*    box-shadow: 3px 3px 10px #000000;*/
 /*    border-radius: 10px;*/
@@ -299,7 +299,7 @@ body, html {
 /*    width: content-box;*/
 /*}*/
 
-/*.ticets-all-admin div{*/
+/*.tickets-all-admin div{*/
 /*    margin: 10px;*/
 /*}*/
 

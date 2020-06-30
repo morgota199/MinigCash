@@ -3,6 +3,7 @@ import {useHttp} from "../../../../../hooks/http.hook";
 import {AuthContext, BalanceContext} from "../../../../../context/auth.context";
 import {useMessage} from "../../../../../hooks/message.hook";
 import ipapi from "ipapi.co";
+import {storage} from "../../../../../storage.config";
 
 export const EthereumContent = ({ props }) => {
     const { request } = useHttp(),
@@ -52,7 +53,7 @@ export const EthereumContent = ({ props }) => {
                 if (data && data.money) {
                     balance.setBalance(data.money);
 
-                    localStorage.setItem("balanceData", JSON.stringify(data.money));
+                    localStorage.setItem(storage.balance, JSON.stringify(data.money));
                 }
                 return message(data.message);
             }
@@ -70,7 +71,7 @@ export const EthereumContent = ({ props }) => {
 
                     if (data && data.money) {
                         balance.setBalance(data.money);
-                        localStorage.setItem("balanceData", JSON.stringify(data.money));
+                        localStorage.setItem(storage.balance, JSON.stringify(data.money));
                     }
 
                     message(data.message);

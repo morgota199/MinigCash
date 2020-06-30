@@ -3,7 +3,13 @@ const API = "/api"
 
 const path = {
     register: "/auth/register",
-    login: "/auth/login"
+    login: "/auth/login",
+    news: "/news",
+    checker: "/checker",
+    power: "/balance/power",
+    money: "/balance/money",
+    ticket: "/tickets",
+    ticket_user: "/tickets/user"
 }
 
 for(const data in path) {

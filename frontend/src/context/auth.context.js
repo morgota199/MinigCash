@@ -11,7 +11,10 @@ export const AuthContext = createContext({
     login:    noop(),
     logout:   noop(),
     isAuth:   false,
-    admin:    false
+    admin:    false,
+    balance:       {},
+    offBalance:    noop(),
+    setBalance:    noop(),
 });
 
 export const RefContext = createContext({

@@ -1,6 +1,8 @@
 import {Prop, raw, Schema, SchemaFactory} from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import {ApiProperty} from "@nestjs/swagger";
+import {PowerDto} from "../dto/PowerDto";
+import {MoneyDto} from "../dto/MoneyDto";
 
 @Schema()
 export class User extends Document {
@@ -34,7 +36,7 @@ export class User extends Document {
         bitcoin: {type: Number},
         usd: {type: Number}
     }))
-    @ApiProperty()
+    @ApiProperty({type: PowerDto})
     power: {
         litecoin: number,
         ethereum: number,
@@ -50,7 +52,7 @@ export class User extends Document {
         ref_money: {type: Number},
         usd: {type: Number}
     }))
-    @ApiProperty()
+    @ApiProperty({type: MoneyDto})
     money: {
         ghs: number,
         litecoin: number,

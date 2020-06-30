@@ -10,7 +10,6 @@ export const useHttp = () => {
             if(body){
                 body = JSON.stringify(body);
                 headers["Content-Type"] = "application/json"
-                headers["Access-Control-Allow-Origin"] = "*";
             }
 
             const response = await fetch(URL, {method, body, headers}),

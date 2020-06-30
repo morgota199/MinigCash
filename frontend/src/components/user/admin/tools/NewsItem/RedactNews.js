@@ -3,7 +3,7 @@ import {AllNewsContext, AuthContext} from "../../../../../context/auth.context";
 import {AllNews} from "./AllNews";
 import {useHttp} from "../../../../../hooks/http.hook";
 import {useMessage} from "../../../../../hooks/message.hook";
-
+import path from "../../../../../path.config"
 import "../../../../../style/NewsToolsContent.css";
 
 const on = {border: "1px solid #000000", padding: 0, cursor: "pointer"},
@@ -28,14 +28,31 @@ export const RedactNews = ({props}) => {
         changeTextHandler = event => setItemNews({_id: itemNews._id, title: itemNews.title, text: event.target.value}),
         saveHandler = async () => {
             if(!props.newPost){
-                const News = await request("/update-news-admin", "POST", {news: itemNews}, {token});
+                const News = await request(
+                    `${path.news}/${itemNews._id}`,
+                    "PUT",
+                    {
+                        title: itemNews.title,
+                        text: itemNews.text
+                    }, {
+                        "Authorization": `Bearer ${token}`
+                    }
+                );
 
                 if(News && News.message) {
                     setRedactNews(itemNews);
                     message(News.message);
                 }
             } else {
-                const News = await request("/set-news-admin", "POST", {news: itemNews}, {token});
+                const News = await request(
+                    path.news,
+                    "POST",
+                    {
+                        title: itemNews.title,
+                        text: itemNews.text
+                    },  {
+                        "Authorization": `Bearer ${token}`
+                    });
 
                 if(News && News.newNews){
                     setRedactNews(itemNews);

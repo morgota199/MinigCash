@@ -6,6 +6,8 @@ import {UserSchema} from "../schemas/user.schemas";
 import { JwtModule } from '@nestjs/jwt';
 import {PassportModule} from "@nestjs/passport";
 import {jwtConstants} from "./constants";
+import {MiningService} from "../mining/service/mining.service";
+import {JwtStrategy} from "./strategy/jwt.strategy";
 
 
 @Module({
@@ -21,8 +23,9 @@ import {jwtConstants} from "./constants";
         JwtModule.register({
             secret: jwtConstants.secret,
             signOptions: { expiresIn: '1d' },
-        }),],
-    providers: [AuthService],
+        })
+    ],
+    providers: [AuthService, MiningService, JwtStrategy],
     controllers: [AuthController]
 })
 

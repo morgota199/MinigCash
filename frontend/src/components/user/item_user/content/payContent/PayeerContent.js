@@ -3,6 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useMessage} from "../../../../../hooks/message.hook";
 import {useHttp} from "../../../../../hooks/http.hook";
 import ipapi from "ipapi.co";
+import {storage} from "../../../../../storage.config";
 
 export const PayeerContent = ({ props }) => {
     const { request, error, clearError } = useHttp(),
@@ -45,7 +46,7 @@ export const PayeerContent = ({ props }) => {
 
                 if(data && data.money){
                     balance.setBalance(data.money);
-                    localStorage.setItem("balanceData", JSON.stringify(data.money));
+                    localStorage.setItem(storage.balance, JSON.stringify(data.money));
                 }
 
                 return message(data.message);

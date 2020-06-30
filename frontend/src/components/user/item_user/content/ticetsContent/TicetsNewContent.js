@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useMessage} from "../../../../../hooks/message.hook";
 import {useHttp} from "../../../../../hooks/http.hook";
 import {AuthContext} from "../../../../../context/auth.context";
+import path from "../../../../../path.config";
 
 export const TicetsNewContent = () => {
     const { token } = useContext(AuthContext);
@@ -25,7 +26,8 @@ export const TicetsNewContent = () => {
 
     const submitHandler = async () => {
         try {
-            const data = await request("/new-ticet", "POST", {form}, {token});
+            console.log(form)
+            const data = await request(path.ticket, "POST", {theme: form.theme, question: form.question},  {"Authorization": `Bearer ${token}`});
 
             if(data && data.message) {
                 message(data.message);

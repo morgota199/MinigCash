@@ -6,6 +6,7 @@ import {usePagination} from "../hooks/pagination.hook";
 
 import "../style/NewsPage.css";
 import back from "../image/dmitry-demidko-OG3A-ilG8AY-unsplash.png";
+import path from "../path.config"
 
 export const NewsPage = () => {
     const collapsible = useCollapsible();
@@ -19,7 +20,7 @@ export const NewsPage = () => {
         collapsible(document.querySelector(".collapsible"), {});
         (async () => {
             try {
-                const data = await request("get-news", "POST", null, {});
+                const data = await request(path.news, "GET", null, {});
 
                 if (data) {
                     const rev = data.reverse();

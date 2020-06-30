@@ -3,7 +3,7 @@ import {ApiBody, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {CreateUserDto} from "../dto/create_user_dto";
 import {AuthService} from "../service/auth.service";
 import {User} from "../../schemas/user.schemas";
-import {ErrorDto} from "../dto/error_dto";
+import {ErrorDto} from "../../dto/error_dto";
 import {TokenDto} from "../dto/token_dto";
 
 @ApiTags("Auth")

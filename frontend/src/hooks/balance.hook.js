@@ -1,9 +1,8 @@
 import {useCallback, useEffect, useState} from "react";
-
-const storageName = "balanceData";
+import {storage} from "../storage.config";
 
 export const useBalance = () => {
-    const [balance, setBalance] = useState(JSON.parse(localStorage.getItem(storageName)) || {
+    const [balance, setBalance] = useState(JSON.parse(localStorage.getItem(storage.balance)) || {
         GHS:      1,
         LITECOIN: 0,
         USD:      0,
@@ -14,12 +13,13 @@ export const useBalance = () => {
 
     const offBalance = useCallback(() => {
         setBalance(null);
-        localStorage.removeItem(storageName);
+        localStorage.removeItem(storage.balance);
     }, []);
 
     useEffect(() => {
-        if(JSON.stringify(balance) !== localStorage.getItem(storageName)) setBalance(JSON.parse(localStorage.getItem(storageName)));
-    }, [balance, setBalance, localStorage.getItem(storageName)]);
+        if(JSON.stringify(balance) !== localStorage.getItem(storage.balance))
+            setBalance(JSON.parse(localStorage.getItem(storage.balance)));
+    }, [balance, setBalance, localStorage.getItem(storage.balance)]);
 
     return { balance, setBalance, offBalance }
 };

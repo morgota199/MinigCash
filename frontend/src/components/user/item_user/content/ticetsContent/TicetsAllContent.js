@@ -3,6 +3,7 @@ import {useHttp} from "../../../../../hooks/http.hook";
 import {AuthContext} from "../../../../../context/auth.context";
 import {Item} from "./subTicetsAllContent";
 import {usePagination} from "../../../../../hooks/pagination.hook";
+import path from "../../../../../path.config";
 
 export const TicetsAllContent = () => {
     const { token } = useContext(AuthContext);
@@ -15,14 +16,14 @@ export const TicetsAllContent = () => {
     useEffect(() => {
         (async () => {
             try {
-                const data = await request("/all-ticet", "POST", null, {token});
+                const data = await request(path.ticket_user, "GET", null, {"Authorization": `Bearer ${token}`});
 
-                if(data && data.ticet){
-                    const ticetData = data.ticet.map((i, n) => {
+                if(data){
+                    const ticketData = data.map((i, n) => {
                         return {id: n, ...i}
                     });
 
-                    setTicet(ticetData.reverse());
+                    setTicet(ticketData.reverse());
                 }
             } catch (e) {
                 console.log("Нет ответа");
@@ -30,7 +31,9 @@ export const TicetsAllContent = () => {
         })();
     }, [request, token, init]);
 
-    useEffect(() => {init(ticet)}, [ticet, init]);
+    useEffect(() => {
+        init(ticet)
+    }, [ticet, init]);
 
     return(
         <div className="table-box">

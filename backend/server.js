@@ -17,7 +17,7 @@ app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swagger));
 app.use('/api/ref', require('./routes/ref.routes'));
 app.use('/api/user', require('./routes/user.routes'));
 app.use('/api/news', require('./routes/news.routes'));
-app.use('/api/ticets', require('./routes/ticets.routes'));
+app.use('/api/tickets', require('./routes/ticets.routes'));
 app.use('/api/statistic', require('./routes/statistic.routes'));
 app.use('/auth/', require('./routes/auth.routes'));
 app.use('/api/pay', require('./routes/pay.routes'));

@@ -1,12 +1,11 @@
 import {useCallback, useEffect, useState} from "react";
 import {useHttp} from "./http.hook";
-
-const storageName = "miningData";
+import {storage} from "../storage.config";
 
 export const useMining = () => {
     const {request} = useHttp();
 
-    const [mining, setMining] = useState(JSON.parse(localStorage.getItem(storageName)) || [
+    const [mining, setMining] = useState(JSON.parse(localStorage.getItem(storage.mining)) || [
         {id: 0, name: "Ethereum", balance: 0, power: 0},
         {id: 1, name: "Litecoin", balance: 0, power: 0},
         {id: 2, name: "Bitcoin", balance: 0, power: 0},
@@ -16,23 +15,23 @@ export const useMining = () => {
     const removeMining = useCallback(() => {
         setMining(null);
 
-        localStorage.removeItem(storageName);
+        localStorage.removeItem(storage.mining);
     }, [setMining]);
 
-    const setPower = useCallback( async (token) => {
-        const powerData = await request("/user/set-power", "POST", null, {token}),
-            newMining = mining;
+    const setPower = useCallback( (power) => {
+        const newMining = mining;
 
-        newMining.map(iter => iter.power = powerData.power[iter.name.toLowerCase()]);
+        newMining.map(iter => iter.power = power[iter.name.toLowerCase()]);
 
         setMining(newMining);
 
-        if(!localStorage.getItem(storageName)) localStorage.setItem(storageName, JSON.stringify(mining));
+        if(!localStorage.getItem(storage.mining))
+            localStorage.setItem(storage.mining, JSON.stringify(mining));
     }, [request, mining]);
 
     useEffect(() => {
-        if(localStorage.getItem("balanceData")){
-            const storageBalance = JSON.parse(localStorage.getItem("balanceData")),
+        if(localStorage.getItem(storage.balance)){
+            const storageBalance = JSON.parse(localStorage.getItem(storage.balance)),
                 newMining = mining;
 
             newMining.map(iter => iter.balance = storageBalance[iter.name.toUpperCase()]);
@@ -40,8 +39,16 @@ export const useMining = () => {
             setMining(newMining);
         }
 
-        if(!localStorage.getItem('UserData')) localStorage.removeItem(storageName);
-    }, [localStorage.getItem(storageName), localStorage.getItem("balanceData"), mining]);
+        if(!localStorage.getItem(storage.user))
+            localStorage.removeItem(storage.mining);
+    }, [
+        JSON.parse(
+            localStorage.getItem(storage.mining)
+        ),
+        JSON.parse(
+            localStorage.getItem(storage.balance)
+        )
+    ]);
 
     return { mining, setMining, removeMining, setPower };
 };

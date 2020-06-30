@@ -3,6 +3,7 @@ import {AllNewsContext, AuthContext} from "../../../../../context/auth.context";
 import {RedactNews} from "./RedactNews";
 import {useHttp} from "../../../../../hooks/http.hook";
 import {useMessage} from "../../../../../hooks/message.hook";
+import path from "../../../../../path.config";
 
 import "../../../../../style/NewsToolsContent.css"
 
@@ -15,7 +16,12 @@ export const NewsItem = ({props}) => {
         message     = useMessage();
 
     const removeHandler = async () => {
-        const data = await request("/remove-news-admin", "POST", {news: props}, {token});
+        const data = await request(
+            `${path.news}/${props._id}`,
+            "DELETE",
+            null, {
+                "Authorization": `Bearer ${token}`
+            });
 
         message(data.message);
 

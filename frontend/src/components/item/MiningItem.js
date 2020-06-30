@@ -4,13 +4,14 @@ import {useHttp} from "../../hooks/http.hook";
 import {useModal} from "../../hooks/modals.hook";
 import {EarningsForecast} from "../modal/EarningsForecast";
 import {Modal} from "../modal/Modal";
-
+import path from "../../path.config";
 
 import "../../style/MiningItem.css"
 import ethereumImage from "../../image/Path 3.png";
 import litecoinImage from "../../image/ltc-crypto-cryptocurrency-cryptocurrencies-cash-money-bank-payment_95207.png";
 import bitcoinImage  from "../../image/btc-crypto-cryptocurrency-cryptocurrencies-cash-money-bank-payment_95084.png";
 import usdImage      from "../../image/start-crypto-cryptocurrency-cryptocurrencies-cash-money-bank-payment_95235.png";
+import {storage} from "../../storage.config";
 
 export const MiningItem = (props) => {
     const {token} = useContext(AuthContext);
@@ -21,7 +22,7 @@ export const MiningItem = (props) => {
 
     const [power, setPower] = useState(props.power),
         [maxPower, setMaxPower] = useState(100 -
-            JSON.parse(localStorage.getItem("miningData"))
+            JSON.parse(localStorage.getItem(storage.mining))
                 .filter(storage => storage.name !== props.name)
                 .map(mining => mining.power)
                 .reduce((a, b) => a + b)
@@ -34,21 +35,21 @@ export const MiningItem = (props) => {
 
     useEffect(() => {
         setMaxPower(100 -
-            JSON.parse(localStorage.getItem("miningData"))
-                .filter(storage => storage.name !== props.name)
+            JSON.parse(localStorage.getItem(storage.mining))
+                .filter(stor => stor.name !== props.name)
                 .map(mining => mining.power)
                 .reduce((a, b) => a + b)
         );
-    }, [localStorage.getItem("miningData"), props.name, setMaxPower]);
+    }, [localStorage.getItem(storage.mining), props.name, setMaxPower]);
 
     const changeHandler = event => {
         if(+(event.target.value) <= maxPower){
             setPower(+(event.target.value));
 
-            localStorage.setItem("miningData",
+            localStorage.setItem(storage.mining,
                 JSON.stringify(
                     JSON.parse(
-                        localStorage.getItem('miningData')
+                        localStorage.getItem(storage.mining)
                     )
                         .map(storage => {
                             if(storage.name === props.name){
@@ -63,7 +64,7 @@ export const MiningItem = (props) => {
 
     const saveHandler = async () => {
         try{
-            await request("/user/save-power", "POST", {name: props.name, power}, {token});
+            await request(path.power, "PUT", {name: props.name, value: power}, {"Authorization": `Bearer ${token}`});
         } catch (e) {}
     };
 

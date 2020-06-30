@@ -3,6 +3,7 @@ import {AllNews} from "./NewsItem/AllNews";
 import {RedactNews} from "./NewsItem/RedactNews";
 import {AllNewsContext, AuthContext} from "../../../../context/auth.context";
 import {useHttp} from "../../../../hooks/http.hook";
+import path from "../../../../path.config";
 
 import "../../../../style/NewsToolsContent.css"
 
@@ -29,7 +30,7 @@ export const NewsToolsContent = () => {
 
     useEffect(() => {
         (async () => {
-            const data = await request("/get-news-admin", "POST", null, {token});
+            const data = await request(path.news, "get", null);
 
             if(data) setAllNews(data.reverse());
         })()

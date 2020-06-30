@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import "../../../style/BalanceUser.css";
 import bitcoinImage from "../../../image/btc-crypto-cryptocurrency-cryptocurrencies-cash-money-bank-payment_95084.png";
@@ -6,13 +6,26 @@ import ghsImage from "../../../image/ctr-crypto-cryptocurrency-cryptocurrencies-
 import ethereumImage from "../../../image/Path 3.png";
 import litecoinImage from "../../../image/ltc-crypto-cryptocurrency-cryptocurrencies-cash-money-bank-payment_95207.png";
 import usdImage from "../../../image/start-crypto-cryptocurrency-cryptocurrencies-cash-money-bank-payment_95235.png";
+import {storage} from "../../../storage.config";
 
 export const BalanceUser = () => {
-    const [localBalance, setLocalBalance] = useState(JSON.parse(localStorage.getItem('balanceData')));
+    const [localBalance, setLocalBalance] = useState(
+        JSON.parse(
+            localStorage.getItem(storage.balance)
+        )
+    );
+
+    const check_balance = () => {
+        setLocalBalance(
+            JSON.parse(localStorage.getItem(storage.balance))
+        );
+    }
 
     useEffect(() => {
-        if(localStorage.getItem('balanceData') !== localBalance) setLocalBalance(JSON.parse(localStorage.getItem('balanceData')));
-    }, [localStorage.getItem('balanceData')]);
+        setInterval(check_balance, 1000)
+
+        return clearInterval(check_balance)
+    }, []);
 
     return (
         <div className="balance">

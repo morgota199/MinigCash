@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import {BalanceContext} from "../../context/auth.context";
 import {useHttp} from "../../hooks/http.hook";
+import {storage} from "../../storage.config";
 
 export const EarningsForecast = ({name}) => {
-    const balance= useContext(BalanceContext);
+    const balance = useContext(BalanceContext);
     const times = [1, 30.4167, 91.2501, 182.5, 365, 730];
 
     const [tables, setTables] = useState([0, 0, 0, 0, 0, 0]),
@@ -11,28 +12,47 @@ export const EarningsForecast = ({name}) => {
 
     const { request } = useHttp();
 
-    useEffect(() => {setPower(JSON.parse(localStorage.getItem("miningData")).filter(m => m.name === name)[0].power);
-    },[JSON.parse(localStorage.getItem("miningData")).filter(m => m.name === name)[0].power])
+    useEffect(() => {
+        setPower(
+            JSON.parse(
+                localStorage.getItem(storage.mining)
+            ).filter(m => m.name === name)[0].power);
+    },[
+        JSON.parse(
+            localStorage.getItem(storage.mining))
+            .filter(m => m.name === name)[0].power
+    ])
 
 
     useEffect( () => {
-        (
-            async () => {
+        (async () => {
                 switch (name) {
                     case "USD":
                         setTables(times.map(t => (((balance.balance.GHS * 0.012) * t) * power) / 100));
                         break;
                     case "Bitcoin":
                         const bitcoin = await request('https://api.coincap.io/v2/rates/bitcoin');
-                        if (bitcoin.data && bitcoin.data.rateUsd) setTables(times.map(t => (((+bitcoin.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100));
+                        if (bitcoin.data && bitcoin.data.rateUsd)
+                            setTables(
+                                times.map(t => {
+                                    return (((+bitcoin.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100
+                                }));
                         break;
                     case "Litecoin":
                         const litecoin = await request('https://api.coincap.io/v2/rates/litecoin');
-                        if (litecoin.data && litecoin.data.rateUsd) setTables(times.map(t => (((+litecoin.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100));
+                        if (litecoin.data && litecoin.data.rateUsd)
+                            setTables(
+                                times.map(t => {
+                                    return (((+litecoin.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100
+                                }));
                         break;
                     case "Ethereum":
                         const ethereum = await request('https://api.coincap.io/v2/rates/ethereum');
-                        if (ethereum.data && ethereum.data.rateUsd) setTables(times.map(t => (((+ethereum.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100));
+                        if (ethereum.data && ethereum.data.rateUsd)
+                            setTables(
+                                times.map(t => {
+                                    return (((+ethereum.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100
+                                }));
                         break;
                     default:
                         break;

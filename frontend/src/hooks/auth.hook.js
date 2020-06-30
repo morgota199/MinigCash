@@ -1,17 +1,30 @@
 import {useState, useCallback, useEffect} from 'react';
-import {useHttp} from "./http.hook";
 import {useMining} from "./mining.hook";
 import {storage} from "../storage.config"
+import {useMessage} from "./message.hook";
+import {useHttp} from "./http.hook";
+import path from "../path.config";
+
 
 export const useAuth = () => {
     const {setPower} = useMining();
+    const message = useMessage();
+    const {request} = useHttp();
 
     const [token, setToken]     = useState(null),
         [userId, setUserId]     = useState(null),
         [userName, setUserName] = useState(null),
-        [admin, setAdmin]       = useState(null);
-
-    const {request} = useHttp();
+        [admin, setAdmin]       = useState(null),
+        [balance, setBalance]   = useState(
+            {
+                GHS:      1,
+                LITECOIN: 0,
+                USD:      0,
+                ETHEREUM: 0,
+                BITCOIN:  0,
+                REF_MONEY:0
+            }
+        );
 
     const logout = useCallback(() => {
         setToken(null);
@@ -20,8 +33,8 @@ export const useAuth = () => {
         setAdmin(null);
 
         localStorage.removeItem("NewsData");
-        localStorage.removeItem("miningData");
-        localStorage.removeItem("balanceData");
+        localStorage.removeItem(storage.mining);
+        localStorage.removeItem(storage.balance);
         localStorage.removeItem("PayAddonData");
         localStorage.removeItem("NewTicetData");
         localStorage.removeItem("UsersAdminData");
@@ -37,75 +50,98 @@ export const useAuth = () => {
         setUserName(name);
         setAdmin(isAdmin);
 
-        // const interval = setInterval(async () => {
-        //     try {
-        //         const blockData = await request(
-        //             "/block-check-user", "POST", null, {token: jwt}),
-        //             isAdminData = await request("/is-admin-check-user", "POST", null, {token: jwt});
-        //
-        //         if (blockData && blockData.blocked) {
-        //             alert("Вы блокированны");
-        //
-        //             logout();
-        //             return clearInterval(interval);
-        //         }
-        //
-        //         if (isAdmin) {
-        //             if (isAdminData && !isAdminData.isAdmin) {
-        //                 alert("Вы больше не администратор\n"
-        //                     + "Зайдите заново чтобы продолжить пользоваться сервисом");
-        //
-        //                 logout();
-        //                 return clearInterval(interval);
-        //             }
-        //         } else {
-        //             if (isAdminData && isAdminData.isAdmin) {
-        //                 alert("Вы стали администратором\n"
-        //                     + "Зайдите заново");
-        //
-        //                 logout();
-        //                 return clearInterval(interval);
-        //             }
-        //         }
-        //     } catch (e) {
-        //         console.log(e.message);
-        //     }
-        // }, 60000);
 
-        // const balanceInterval = setInterval(async () => {
-        //     try {
-        //         const balanceData = await request('/user/on-balance', "POST", null, {token: jwt});
-        //
-        //         await setPower(jwt);
-        //
-        //         const newBalance = {
-        //             GHS: balanceData.money.ghs,
-        //             LITECOIN: balanceData.money.litecoin,
-        //             BITCOIN: balanceData.money.bitcoin,
-        //             ETHEREUM: balanceData.money.ethereum,
-        //             USD: balanceData.money.usd,
-        //             REF_MONEY: balanceData.money.ref_money
-        //         };
-        //
-        //         localStorage.setItem("balanceData", JSON.stringify(newBalance));
-        //
-        //         if (!localStorage.getItem(storageName)) {
-        //             localStorage.removeItem('balanceData');
-        //             localStorage.removeItem('miningData');
-        //             clearInterval(balanceInterval);
-        //         }
-        //     } catch (e) {}
-        // }, 1000);
+        setInterval(async () => {
+            try {
+                const checker = await request(
+                    path.checker,
+                    "GET",
+                    null,
+                    {"Authorization": `Bearer ${jwt}`}
+                )
+
+                if (checker.block) return logout();
+
+                if(!is_admin(isAdmin, checker.is_admin)) {
+                    logout()
+                    return window.location.reload()
+                }
+
+                setPower(checker.power)
+
+                return set_balance(checker.money)
+            } catch (e) {
+                if(typeof e.message === "string")
+                    return message(e.message)
+                else
+                    for(const err of e.message)
+                        message(err)
+            }
+        }, 1000)
 
         localStorage.setItem(storage.user, JSON.stringify({token: jwt, userId: id, userName: name, admin: isAdmin}));
 
-    }, [request, logout, setPower]);
+    }, [logout, setPower]);
+
+    const is_admin = (isAdmin, is_admin) => {
+        if (isAdmin) {
+            if (is_admin === false) {
+                alert("Вы больше не администратор\n"
+                    + "Зайдите заново чтобы продолжить пользоваться сервисом");
+                return false
+            }
+        } else {
+            if (is_admin === true) {
+                alert("Вы стали администратором\n"
+                    + "Зайдите заново");
+
+                return false
+            }
+        }
+
+        return true
+    }
+
+    const set_balance = (money) => {
+        const newBalance = {
+            GHS: money.ghs,
+            LITECOIN: money.litecoin,
+            BITCOIN: money.bitcoin,
+            ETHEREUM: money.ethereum,
+            USD: money.usd,
+            REF_MONEY: money.ref_money
+        };
+
+        if (!localStorage.getItem(storage.user)) {
+            localStorage.removeItem(storage.balance);
+            localStorage.removeItem(storage.mining);
+        }
+
+        if (JSON.stringify(balance) === JSON.stringify(newBalance)) return
+
+        setBalance(newBalance)
+
+        localStorage.setItem(storage.balance, JSON.stringify(newBalance));
+    }
 
     useEffect(() => {
         const data = JSON.parse(localStorage.getItem(storage.user));
 
-        if(data && data.token) login(data.token, data.userId, data.userName, data.admin);
+        if(data && data.token) {
+
+            login(data.token, data.userId, data.userName, data.admin);
+        }
     }, [login]);
 
-    return { login, logout, token, userId, userName, admin }
+    const offBalance = useCallback(() => {
+        setBalance(null);
+        localStorage.removeItem(storage.balance);
+    }, []);
+
+    useEffect(() => {
+        if(JSON.stringify(balance) !== localStorage.getItem(storage.balance))
+            setBalance(JSON.parse(localStorage.getItem(storage.balance)));
+    }, [balance, setBalance]);
+
+    return { login, logout, token, userId, userName, admin, balance }
 };
