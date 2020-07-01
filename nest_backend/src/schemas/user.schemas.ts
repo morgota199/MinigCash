@@ -3,6 +3,7 @@ import { Document } from 'mongoose';
 import {ApiProperty} from "@nestjs/swagger";
 import {PowerDto} from "../dto/PowerDto";
 import {MoneyDto} from "../dto/MoneyDto";
+import {ReferenceDto} from "../dto/ReferenceDto";
 
 @Schema()
 export class User extends Document {
@@ -66,7 +67,7 @@ export class User extends Document {
         ref_register: {type: [String]},
         ref_show: {type: Number}
     }))
-    @ApiProperty()
+    @ApiProperty({type: ReferenceDto})
     ref: {
         ref_register: string[],
         ref_show: number

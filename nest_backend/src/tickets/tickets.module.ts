@@ -10,18 +10,11 @@ import {AuthModule} from "../auth/auth.module";
 import {UserSchema} from "../schemas/user.schemas";
 
 @Module({
-    imports: [MongooseModule.forFeature(
-        [
-            {
-                name: "Tickets",
-                schema: TicketSchema
-            },
-            {
-                name: "User",
-                schema: UserSchema
-            }
-        ]
-    ),
+    imports: [
+        MongooseModule.forFeature([
+                {name: "Tickets", schema: TicketSchema},
+                {name: "User", schema: UserSchema}
+            ]),
         PassportModule,
         JwtModule.register({
             secret: jwtConstants.secret,

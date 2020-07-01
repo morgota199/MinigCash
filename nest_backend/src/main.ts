@@ -8,7 +8,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
       .setTitle('Mining Cash')
-      .setDescription('The Mining Cash API description')
+      .setDescription('The Mining Cash REST API description')
       .setVersion('1.0')
       .build();
 

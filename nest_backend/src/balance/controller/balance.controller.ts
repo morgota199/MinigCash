@@ -3,7 +3,7 @@ import {ApiBody, ApiHeaders, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {JwtService} from "@nestjs/jwt";
 import {BalanceService} from "../service/balance.service";
 import {JwtAuthGuard} from "../../auth/strategy/JWT-guard";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 import {MoneyDto} from "../../dto/MoneyDto";
 import {PowerDto} from "../../dto/PowerDto";
 import {User} from "../../schemas/user.schemas";

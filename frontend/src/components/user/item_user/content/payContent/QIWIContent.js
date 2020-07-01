@@ -4,6 +4,7 @@ import {useMessage} from "../../../../../hooks/message.hook";
 import {useHttp} from "../../../../../hooks/http.hook";
 import ipapi from "ipapi.co";
 import {storage} from "../../../../../storage.config";
+import path from "../../../../../path.config";
 
 export const QIWIContent = (props) => {
     const { request, error, clearError } = useHttp(),
@@ -72,14 +73,15 @@ export const QIWIContent = (props) => {
             if(form.RUB > 0) {
                 const location = async ip => {
                     const data = await request(
-                        '/user/pay-out/qiwi',
+                        path.payout_qiwi,
                         "POST",
                         {
-                            ...form,
+                            number: `${form.number}`,
+                            money: +form.RUB,
                             IP: ip,
-                            rub: rub
+                            exchange: +rub
                         },
-                        {token: auth.token}
+                        {"Authorization": `Bearer ${auth.token}`}
                     );
 
                     if (data && data.money) {

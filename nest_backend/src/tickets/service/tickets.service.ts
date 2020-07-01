@@ -3,7 +3,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {Ticket} from "../../schemas/ticket.schema";
 import {Model} from "mongoose";
 import {UsernameAndEmailDto} from "../dto/UsernameAndEmailDto";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 import {ThemeAndQuestionDto} from "../dto/ThemeAndQuestionDto";
 import {User} from "../../schemas/user.schemas";
 import {TicketDto} from "../dto/TicketDto";

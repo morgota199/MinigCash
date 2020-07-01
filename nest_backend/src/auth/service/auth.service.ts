@@ -4,7 +4,7 @@ import {User} from "../../schemas/user.schemas";
 import {Model} from "mongoose";
 import {hash, compare} from "bcrypt";
 import {InjectModel} from "@nestjs/mongoose";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 import {JwtService} from "@nestjs/jwt";
 import {TokenDto} from "../dto/token_dto";
 import {MiningService} from "../../mining/service/mining.service";

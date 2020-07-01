@@ -1,9 +1,10 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import {ApiProperty} from "@nestjs/swagger";
+import {IsIP, IsMobilePhone} from "class-validator";
 
 @Schema()
-export class Pay extends Document {
+export class Payouts extends Document {
     @Prop()
     @ApiProperty()
     username: string
@@ -18,10 +19,14 @@ export class Pay extends Document {
 
     @Prop()
     @ApiProperty()
+    @IsMobilePhone('ru-RU')
+    @IsMobilePhone('uk-UA')
+    @IsMobilePhone('en-US')
     number: string
 
     @Prop()
     @ApiProperty()
+    @IsIP()
     ip: string
 
     @Prop()
@@ -37,4 +42,4 @@ export class Pay extends Document {
     date: string
 }
 
-export const PaySchema = SchemaFactory.createForClass(Pay);
+export const PayoutsSchema = SchemaFactory.createForClass(Payouts);

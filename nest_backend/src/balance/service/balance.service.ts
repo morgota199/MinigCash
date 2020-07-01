@@ -3,7 +3,7 @@ import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
 import {User} from "../../schemas/user.schemas";
 import {MoneyDto} from "../../dto/MoneyDto";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 import {PowerDto} from "../../dto/PowerDto";
 import {OnePowerDto} from "../dto/OnePowerDto";
 

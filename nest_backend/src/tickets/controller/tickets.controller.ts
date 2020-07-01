@@ -4,7 +4,7 @@ import {TicketsService} from "../service/tickets.service";
 import {Ticket} from "../../schemas/ticket.schema";
 import {JwtAuthGuard} from "../../auth/strategy/JWT-guard";
 import {JwtService} from "@nestjs/jwt";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 import {ThemeAndQuestionDto} from "../dto/ThemeAndQuestionDto";
 import {TicketDto} from "../dto/TicketDto";
 

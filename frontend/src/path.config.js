@@ -9,7 +9,8 @@ const path = {
     power: "/balance/power",
     money: "/balance/money",
     ticket: "/tickets",
-    ticket_user: "/tickets/user"
+    ticket_user: "/tickets/user",
+    payout_qiwi: "/pay/payouts/qiwi"
 }
 
 for(const data in path) {

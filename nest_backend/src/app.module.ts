@@ -11,6 +11,7 @@ import { PayModule } from './pay/pay.module';
 import { CheckerModule } from './checker/checker.module';
 import { BalanceModule } from './balance/balance.module';
 import { TicketsModule} from "./tickets/tickets.module"
+import { ReferenceModule } from './reference/reference.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { TicketsModule} from "./tickets/tickets.module"
     PayModule,
     CheckerModule,
     BalanceModule,
-    TicketsModule],
+    TicketsModule,
+    ReferenceModule],
   controllers: [AppController],
   providers: [AppService, MiningService],
 })

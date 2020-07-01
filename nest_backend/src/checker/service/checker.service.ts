@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {InjectModel} from "@nestjs/mongoose";
 import {Model} from "mongoose";
 import {User} from "../../schemas/user.schemas";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 import {CheckerDto} from "../dto/CheckerDto";
 
 @Injectable()

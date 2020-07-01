@@ -4,7 +4,7 @@ import {CheckerService} from "../service/checker.service";
 import {JwtAuthGuard} from "../../auth/strategy/JWT-guard";
 import {JwtService} from "@nestjs/jwt";
 import {CheckerDto} from "../dto/CheckerDto";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 
 @ApiTags("Checker")
 @Controller('checker')

@@ -2,7 +2,7 @@ import {Body, Controller, Delete, Get, Param, Post, Put, UseGuards} from '@nestj
 import {NewsService} from "../service/news.service";
 import {ApiBody, ApiHeaders, ApiProperty, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {NewsDto} from "../dto/NewsDto";
-import {ErrorDto} from "../../dto/error_dto";
+import {ErrorDto} from "../../dto/ErrorDto";
 import {JwtAuthGuard} from "../../auth/strategy/JWT-guard";
 
 @ApiTags("News")
