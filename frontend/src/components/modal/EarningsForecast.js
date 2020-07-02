@@ -4,7 +4,7 @@ import {useHttp} from "../../hooks/http.hook";
 import {storage} from "../../storage.config";
 
 export const EarningsForecast = ({name}) => {
-    const balance = useContext(BalanceContext);
+    const balance = JSON.parse(localStorage.getItem(storage.balance))
     const times = [1, 30.4167, 91.2501, 182.5, 365, 730];
 
     const [tables, setTables] = useState([0, 0, 0, 0, 0, 0]),
@@ -28,14 +28,14 @@ export const EarningsForecast = ({name}) => {
         (async () => {
                 switch (name) {
                     case "USD":
-                        setTables(times.map(t => (((balance.balance.GHS * 0.012) * t) * power) / 100));
+                        setTables(times.map(t => (((balance.GHS * 0.012) * t) * power) / 100));
                         break;
                     case "Bitcoin":
                         const bitcoin = await request('https://api.coincap.io/v2/rates/bitcoin');
                         if (bitcoin.data && bitcoin.data.rateUsd)
                             setTables(
                                 times.map(t => {
-                                    return (((+bitcoin.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100
+                                    return (((+bitcoin.data.rateUsd * (balance.GHS * 0.012)) * t) * power) / 100
                                 }));
                         break;
                     case "Litecoin":
@@ -43,7 +43,7 @@ export const EarningsForecast = ({name}) => {
                         if (litecoin.data && litecoin.data.rateUsd)
                             setTables(
                                 times.map(t => {
-                                    return (((+litecoin.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100
+                                    return (((+litecoin.data.rateUsd * (balance.GHS * 0.012)) * t) * power) / 100
                                 }));
                         break;
                     case "Ethereum":
@@ -51,7 +51,7 @@ export const EarningsForecast = ({name}) => {
                         if (ethereum.data && ethereum.data.rateUsd)
                             setTables(
                                 times.map(t => {
-                                    return (((+ethereum.data.rateUsd * (balance.balance.GHS * 0.012)) * t) * power) / 100
+                                    return (((+ethereum.data.rateUsd * (balance.GHS * 0.012)) * t) * power) / 100
                                 }));
                         break;
                     default:

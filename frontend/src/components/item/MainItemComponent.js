@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useHttp} from "../../hooks/http.hook";
+import path from "../../path.config"
 
 import '../../style/MainItemComponent.css'
 
@@ -11,11 +12,11 @@ export const MainItemComponent = () => {
 
     useEffect(() => {
         (async () => {
-            const data = await request("/user/transaction", "POST");
+            const data = await request(path.transaction);
 
-            if(data && data.payIn && data.payOut) {
-                setPayIn(data.payIn);
-                setPayOut(data.payOut);
+            if(data && data.payment && data.payouts) {
+                setPayIn(data.payment);
+                setPayOut(data.payouts);
             }
         })()
     }, [request])
@@ -61,7 +62,7 @@ export const MainItemComponent = () => {
                                 <li key={n} className='collection-item pay-collection'
                                     style={{backgroundColor: 'rgba(163, 179, 62, 0.35)'}
                                     }>
-                                    <p>{i.userName}</p>
+                                    <p>{i.username}</p>
                                     <p>{i.money} {val}</p>
                                 </li>
                             )
@@ -101,7 +102,7 @@ export const MainItemComponent = () => {
                                 <li key={n} className='collection-item pay-collection'
                                     style={{backgroundColor: 'rgba(163, 179, 62, 0.35)'}
                                     }>
-                                    <p>{o.userName}</p>
+                                    <p>{o.username}</p>
                                     <p>{o.money} {val}</p>
                                 </li>
                             )

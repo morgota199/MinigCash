@@ -8,8 +8,9 @@ import {JwtAuthGuard} from "../../auth/strategy/JWT-guard";
 @ApiTags("News")
 @Controller('news')
 export class NewsController {
-    constructor(private newsService: NewsService) {
-    }
+    constructor(
+        private newsService: NewsService
+    ) {}
 
     @Get()
     @ApiResponse({status: 200, type: [NewsDto]})

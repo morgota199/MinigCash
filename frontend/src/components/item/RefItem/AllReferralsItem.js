@@ -5,6 +5,7 @@ import {useHttp} from "../../../hooks/http.hook";
 import {AuthContext} from "../../../context/auth.context";
 import {usePagination} from "../../../hooks/pagination.hook";
 import copy from "copy-to-clipboard";
+import path from "../../../path.config";
 
 export const AllReferralsItem = ({link}) => {
     const {token} = useContext(AuthContext);
@@ -26,13 +27,13 @@ export const AllReferralsItem = ({link}) => {
     useEffect(() => {
         (
             async () => {
-                const data = await request('/get-referrals-by-id', "POST", null, {token}),
-                    refShow = await request('/get-user-referral', "POST", null, {token});
+                const data = await request(path.reference_me, "GET", null, {"Authorization": `Bearer ${token}`}),
+                    refShow = await request(path.reference_ref, "GET", null, {"Authorization": `Bearer ${token}`});
 
                 if(data && refShow){
-                    const rev = data.referrals.reverse()
+                    const rev = data.reverse()
 
-                    setShow(refShow.ref.ref_show);
+                    setShow(refShow.ref_show);
                     setRefUsers(rev);
                 }
             })()

@@ -64,6 +64,20 @@ export class AuthService {
 
         this.miningService.mining(person.id)
 
+        if(!user.reference)
+            return person
+
+        const refLink = await this.userModel.findById(user.reference)
+
+        if(!refLink)
+            return person
+
+        refLink.ref.ref_register.push(person._id)
+        person.forRef = user.reference
+
+        await refLink.save()
+        await person.save()
+
         return person
     }
 

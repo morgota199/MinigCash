@@ -7,6 +7,7 @@ import {ErrorDto} from "../../dto/ErrorDto";
 import {ThemeAndQuestionDto} from "../dto/ThemeAndQuestionDto";
 import {User} from "../../schemas/user.schemas";
 import {TicketDto} from "../dto/TicketDto";
+import {TicketAndMessageDto} from "../dto/TicketAndMessageDto";
 
 @Injectable()
 export class TicketsService {
@@ -34,7 +35,7 @@ export class TicketsService {
         return this.ticketModel.find({username: user.username, email: user.email})
     }
 
-    async new_ticket(id: string, data: ThemeAndQuestionDto): Promise<Ticket | ErrorDto> {
+    async new_ticket(id: string, data: ThemeAndQuestionDto): Promise<TicketAndMessageDto | ErrorDto> {
         const user = await this.userModel.findById(id)
 
         if(!user)
@@ -56,7 +57,12 @@ export class TicketsService {
 
         const ticket = new this.ticketModel(ticketData)
 
-        return ticket.save()
+        await ticket.save()
+
+        return {
+            ticket: ticket,
+            message: "Отправлено"
+        }
     }
 
     async remove_ticket(id) {

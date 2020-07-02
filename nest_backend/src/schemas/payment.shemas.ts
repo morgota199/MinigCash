@@ -13,7 +13,7 @@ export class Payment extends Document {
 
     @Prop()
     @ApiProperty()
-    userName: string
+    username: string
 
     @Prop()
     @ApiProperty()

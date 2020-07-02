@@ -50,9 +50,9 @@ export const Ref = (props) => {
                         pagePagination[count].map((i, n) => {
                             return (
                                 <tr key={n}>
-                                    <td data-label="ID: " onClick={props.searchUsersById}>{i._id}</td>
-                                    <td data-label="Login: " onClick={props.searchOnLoginAndEmailHandler}>{i.userName}</td>
-                                    <td data-label="Email: " onClick={props.searchOnLoginAndEmailHandler}>{i.email}</td>
+                                    <td data-label="ID: " onClick={props.search}>{i._id}</td>
+                                    <td data-label="Login: " onClick={props.search}>{i.username}</td>
+                                    <td data-label="Email: " onClick={props.search}>{i.email}</td>
                                 </tr>
                             )
                         }) : <tr style={{colSpan: 3}}><td/><td>Нет рефералов</td><td/></tr>

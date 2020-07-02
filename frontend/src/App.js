@@ -9,7 +9,7 @@ import {useReference} from "./hooks/ref.hook";
 import {useHttp} from "./hooks/http.hook";
 import {useMessage} from "./hooks/message.hook";
 import {useBalance} from "./hooks/balance.hook";
-
+import path from "./path.config"
 
 const App = () => {
     const { login, logout, token, userId, userName, admin, badge, setBadge } = useAuth(),
@@ -28,9 +28,8 @@ const App = () => {
 
         if(ref) {
             (async () => {
-                const data = await request('/', "POST", {ref: ref});
-                loginRef(ref);
-                message(data.message)
+                await request(`${path.reference}/${ref}` , "GET");
+                loginRef(ref)
             })();
         }
     }, [request, loginRef, message]);

@@ -3,6 +3,7 @@ import {AuthContext} from "../../../../../context/auth.context";
 import {useHttp} from "../../../../../hooks/http.hook";
 import {Item} from "./subListPayContent";
 import {usePagination} from "../../../../../hooks/pagination.hook";
+import path from "../../../../../path.config";
 
 import "../../../../../style/ListPayContent.css"
 
@@ -17,10 +18,15 @@ export const ListPayContent = () => {
     useEffect(() => {
         (async () => {
             try {
-                const data = await request("/user/get-all-user-pay", "POST", null, {token});
+                const data = await request(
+                    path.payment_user,
+                    "GET",
+                    null,
+                    {"Authorization": `Bearer ${token}`}
+                    );
 
-                if (data && data.payData) {
-                    setPay(data.payData.reverse());
+                if (data) {
+                    setPay(data.reverse());
                 }
 
             } catch (e) {

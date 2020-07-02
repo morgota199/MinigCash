@@ -1,16 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useHttp} from "../../../../../hooks/http.hook";
-import {AuthContext, BalanceContext} from "../../../../../context/auth.context";
+import {AuthContext} from "../../../../../context/auth.context";
 import {useMessage} from "../../../../../hooks/message.hook";
 import ipapi from "ipapi.co";
-import {storage} from "../../../../../storage.config";
+import path from "../../../../../path.config";
 
 export const BitcoinContent = ({ props }) => {
     const { request } = useHttp(),
         message = useMessage();
 
-    const auth = useContext(AuthContext),
-        balance = useContext(BalanceContext);
+    const auth = useContext(AuthContext);
 
     const [USD, setUsd] = useState(null),
         [GHS, setGHS] = useState(0),
@@ -20,6 +19,49 @@ export const BitcoinContent = ({ props }) => {
         form.BTC = +form.BTC;
 
         setForm({...form, [event.target.name] : event.target.value });
+    };
+
+    const sendHandler = async () => {
+        if(!props) {
+            if (+(form.BTC * USD).toFixed(2) >= 5) {
+                const data = await request(
+                    path.payment + '/bitcoin',
+                    "POST",
+                    {
+                        number: `${form.number}`,
+                        money: +form.BTC,
+                        ghs: +(form.BTC * USD).toFixed(2)
+                    },
+                    {"Authorization": `Bearer ${auth.token}`}
+                );
+
+                return message(data.message);
+            }
+
+            return message("Минимальное пополнение Gh/s: 5");
+        } else {
+            if(form.BTC > 0) {
+                const location = async ip => {
+                    const data = await request(
+                        path.payout + '/bitcoin',
+                        "POST",
+                        {
+                            number: `${form.number}`,
+                            money: +form.BTC,
+                            IP: ip,
+                            exchange: 1
+                        },
+                        {"Authorization": `Bearer ${auth.token}`}
+                    );
+
+                    message(data.message);
+                };
+
+                ipapi.location(location, '', '', 'ip');
+            } else {
+                message("Данная сумма не доступна");
+            }
+        }
     };
 
     useEffect(() => {
@@ -34,49 +76,6 @@ export const BitcoinContent = ({ props }) => {
             setGHS(form.BTC * USD);
         }
     }, [form, USD]);
-
-    const sendHandler = async () => {
-        if(!props) {
-            if (+(form.BTC * USD).toFixed(2) >= 5) {
-                const data = await request(
-                    '/user/pay-in/bitcoin',
-                    "POST",
-                    {
-                        ...form,
-                        USD,
-                        ghs: +(form.BTC * USD).toFixed(2)
-                    },
-                    {token: auth.token}
-                );
-
-                return message(data.message);
-            }
-
-            return message("Минимальное пополнение Gh/s: 5");
-        } else {
-            if(form.BTC > 0) {
-                const location = async ip => {
-                    const data = await request(
-                        '/user/pay-out/bitcoin',
-                        "POST",
-                        { ...form, IP: ip },
-                        { token: auth.token }
-                    );
-
-                    if (data && data.money) {
-                        balance.setBalance(data.money);
-                        localStorage.setItem(storage.balance, JSON.stringify(data.money));
-                    }
-
-                    message(data.message);
-                };
-
-                ipapi.location(location, '', '', 'ip');
-            } else {
-                message("Данная сумма не доступна");
-            }
-        }
-    };
 
     if(!props) {
         return (

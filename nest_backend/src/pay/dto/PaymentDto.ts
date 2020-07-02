@@ -1,7 +1,7 @@
 import {ApiProperty} from "@nestjs/swagger";
-import {IsIP, IsNumber} from "class-validator";
+import {IsNumber} from "class-validator";
 
-export class PayoutDto {
+export class PaymentDto {
     @ApiProperty()
     number: string
 
@@ -10,10 +10,9 @@ export class PayoutDto {
     money: number
 
     @ApiProperty()
-    @IsIP()
-    IP: string
+    @IsNumber()
+    ghs: number
 
     @ApiProperty()
-    @IsNumber()
-    exchange: number
+    comment: string
 }

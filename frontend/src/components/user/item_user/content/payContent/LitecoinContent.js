@@ -1,16 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useHttp} from "../../../../../hooks/http.hook";
-import {AuthContext, BalanceContext} from "../../../../../context/auth.context";
+import {AuthContext} from "../../../../../context/auth.context";
 import {useMessage} from "../../../../../hooks/message.hook";
 import ipapi from "ipapi.co";
-import {storage} from "../../../../../storage.config";
+import path from "../../../../../path.config";
 
 export const LitecoinContent = ({ props }) => {
     const { request } = useHttp(),
         message = useMessage();
 
-    const auth = useContext(AuthContext),
-        balance = useContext(BalanceContext);
+    const auth = useContext(AuthContext);
 
     const [USD, setUsd] = useState(null),
         [GHS, setGHS] = useState(0),
@@ -20,6 +19,49 @@ export const LitecoinContent = ({ props }) => {
         form.LTC = +form.LTC;
 
         setForm({...form, [event.target.name] : event.target.value });
+    };
+
+    const sendHandler = async () => {
+        if(!props) {
+            if (+(form.LTC * USD).toFixed(2) >= 5) {
+                const data = await request(
+                    path.payment + "/litecoin",
+                    "POST",
+                    {
+                        number: `${form.number}`,
+                        money: +form.LTC,
+                        ghs: +(form.LTC * USD).toFixed(2)
+                    },
+                    {"Authorization": `Bearer ${auth.token}`}
+                );
+
+                return message(data.message);
+            }
+
+            return message("Минимальное пополнение Gh/s: 5");
+        } else {
+            if(form.LTC > 0) {
+                const location = async ip => {
+                    const data = await request(
+                        path.payout + "/litecoin",
+                        "POST",
+                        {
+                            number: `${form.number}`,
+                            money: +form.LTC,
+                            IP: ip,
+                            exchange: 1
+                        },
+                        {"Authorization": `Bearer ${auth.token}`}
+                    );
+
+                    message(data.message);
+                };
+
+                ipapi.location(location, '', '', 'ip');
+            } else {
+                message("Данная сумма не доступна");
+            }
+        }
     };
 
     useEffect(() => {
@@ -35,54 +77,6 @@ export const LitecoinContent = ({ props }) => {
             setGHS(form.LTC * USD);
         }
     }, [form, USD]);
-
-    const sendHandler = async () => {
-        if(!props) {
-            if (+(form.LTC * USD).toFixed(2) >= 5) {
-                const data = await request(
-                    '/user/pay-in/litecoin',
-                    "POST",
-                    {
-                        ...form,
-                        USD,
-                        ghs: +(form.LTC * USD).toFixed(2)
-                    },
-                    {token: auth.token}
-                );
-
-                if (data && data.money) {
-                    balance.setBalance(data.money);
-
-                    localStorage.setItem(storage.balance, JSON.stringify(data.money));
-                }
-                return message(data.message);
-            }
-
-            return message("Минимальное пополнение Gh/s: 5");
-        } else {
-            if(form.LTC > 0) {
-                const location = async ip => {
-                    const data = await request(
-                        '/user/pay-out/litecoin',
-                        "POST",
-                        { ...form, IP: ip },
-                        { token: auth.token }
-                    );
-
-                    if (data && data.money) {
-                        balance.setBalance(data.money);
-                        localStorage.setItem(storage.balance, JSON.stringify(data.money));
-                    }
-
-                    message(data.message);
-                };
-
-                ipapi.location(location, '', '', 'ip');
-            } else {
-                message("Данная сумма не доступна");
-            }
-        }
-    };
 
     if(!props) {
         return (

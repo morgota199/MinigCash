@@ -1,7 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useHttp} from "../../../hooks/http.hook";
-import {AuthContext, RefUserPayContext} from "../../../context/auth.context";
+import {AuthContext} from "../../../context/auth.context";
 import {usePagination} from "../../../hooks/pagination.hook";
+import path from "../../../path.config";
 
 export const RefUserPayItem = () => {
     const {token} = useContext(AuthContext);
@@ -18,21 +19,18 @@ export const RefUserPayItem = () => {
         const ID = window.location.href.split("my-ref/")[1];
 
         (async () => {
-            const data = await request("/get-referrals-pay-by-id", "POST", {ID}, {token}),
-                referralData = await request('/get-referrals-length', "POST", null, {token}),
-                searchData = await request("/search-user-by-id", "POST", {searchParam: ID}, {token});
+            const data = await request(`${path.reference_pay}/${ID}`, "GET", null, {"Authorization": `Bearer ${token}`}),
+                referralData = await request(path.reference_ref, "Get", null, {"Authorization": `Bearer ${token}`}),
+                searchData = await request(`${path.user_for_id}/${ID}`, "GET",null, {"Authorization": `Bearer ${token}`});
 
             if( data &&
-                data.pay &&
-                referralData &&
-                referralData.refLength &&
                 searchData &&
-                searchData.searchUser
+                referralData.ref_register
             ){
-                const rev = data.pay.reverse();
+                const rev = data.reverse();
 
-                setReferralLength(referralData.refLength);
-                setLogin(searchData.searchUser.userName);
+                setReferralLength(referralData.ref_register.length);
+                setLogin(searchData.username);
                 setPay(rev);
                 init(rev);
             }

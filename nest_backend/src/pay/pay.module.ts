@@ -10,9 +10,10 @@ import {PassportModule} from "@nestjs/passport";
 import {JwtModule} from "@nestjs/jwt";
 import {jwtConstants} from "../auth/constants";
 import {UserSchema} from "../schemas/user.schemas";
-import {ApiTags} from "@nestjs/swagger";
+import { PayController } from './controller/pay.controller';
+import { PayService } from './service/pay.service';
 
-@ApiTags("Pay")
+
 @Module({
     imports: [
         MongooseModule.forFeature([
@@ -25,7 +26,7 @@ import {ApiTags} from "@nestjs/swagger";
             secret: jwtConstants.secret,
             signOptions: { expiresIn: '1d' },
         })],
-    controllers: [PaymentController, PayoutsController],
-    providers: [PayoutsService, PaymentService]
+    controllers: [PaymentController, PayoutsController, PayController],
+    providers: [PayoutsService, PaymentService, PayService]
 })
 export class PayModule {}

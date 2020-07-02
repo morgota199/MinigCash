@@ -2,6 +2,7 @@ import {AuthContext, TablePayContext} from "../../context/auth.context";
 import React, {useContext, useEffect, useState} from "react";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
+import path from "../../path.config";
 
 export const PayItem = ({props}) => {
     const {token} = useContext(AuthContext),
@@ -23,7 +24,12 @@ export const PayItem = ({props}) => {
 
     const rejectHandler = async () => {
         try {
-            const data = await request("/user/reject-badge", "POST", {candidate: allPay}, {token});
+            const data = await request(
+                path.payout_reject.replace("{id}", allPay._id),
+                "PUT",
+                null,
+                {"Authorization": `Bearer ${token}`}
+            );
 
             message(data.message);
             if (data.message === "Отклонено") {
@@ -36,7 +42,12 @@ export const PayItem = ({props}) => {
 
     const approveHandler = async () => {
         try{
-            const data = await request("/user/approve-badge", "POST", {candidate: allPay}, {token});
+            const data = await request(
+                path.payout_approve.replace("{id}", allPay._id),
+                "PUT",
+                null,
+                {"Authorization": `Bearer ${token}`}
+            );
 
             message(data.message);
 

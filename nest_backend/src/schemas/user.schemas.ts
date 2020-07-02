@@ -1,5 +1,5 @@
 import {Prop, raw, Schema, SchemaFactory} from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import {Document, Types} from 'mongoose';
 import {ApiProperty} from "@nestjs/swagger";
 import {PowerDto} from "../dto/PowerDto";
 import {MoneyDto} from "../dto/MoneyDto";
@@ -7,6 +7,7 @@ import {ReferenceDto} from "../dto/ReferenceDto";
 
 @Schema()
 export class User extends Document {
+
     @Prop()
     @ApiProperty()
     username: string

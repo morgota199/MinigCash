@@ -13,4 +13,7 @@ export class CreateUserDto {
     @ApiProperty()
     @Length(8, 30, {message: "Длина пароля от 8 до 30 символов"})
     password: string
+
+    @ApiProperty({required: false})
+    reference: string
 }

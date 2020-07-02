@@ -26,7 +26,6 @@ export const TicetsNewContent = () => {
 
     const submitHandler = async () => {
         try {
-            console.log(form)
             const data = await request(path.ticket, "POST", {theme: form.theme, question: form.question},  {"Authorization": `Bearer ${token}`});
 
             if(data && data.message) {
@@ -37,6 +36,8 @@ export const TicetsNewContent = () => {
                     theme: '',
                     question: ''
                 });
+
+                return window.location.href = "/ticets/all"
             }
         } catch (e) {}
     };

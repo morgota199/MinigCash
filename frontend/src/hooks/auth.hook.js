@@ -64,7 +64,7 @@ export const useAuth = () => {
 
                 if(!is_admin(isAdmin, checker.is_admin)) {
                     logout()
-                    return window.location.reload()
+                    return window.location.href = "/"
                 }
 
                 setPower(checker.power)

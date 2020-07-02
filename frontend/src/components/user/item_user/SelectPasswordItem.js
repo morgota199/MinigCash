@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../../context/auth.context";
 import {useMessage} from "../../../hooks/message.hook";
 import {useHttp} from "../../../hooks/http.hook";
+import path from "../../../path.config";
+
 
 import "../../../style/SelectPasswordItem.css"
 
@@ -30,29 +32,31 @@ export const SelectPasswordItem = () => {
     };
 
     const selectPasswordHandler = async () => {
-        if(form.newPasswordOne !== form.newPasswordTwo){
+        if(form.newPasswordOne !== form.newPasswordTwo)
             return message('Новые пароли не совпадают')
-        }
 
-        if(form.oldPassword === form.newPasswordOne){
+
+        if(form.oldPassword === form.newPasswordOne)
             return message("Старый и новые не могут совпадать");
-        }
+
 
         const data = await request(
-            "/user/profile/select-password",
-            "POST",
+            path.user_select_password,
+            "PUT",
             {
                 oldPassword: form.oldPassword,
                 newPassword: form.newPasswordOne
             },
             {
-                token: auth.token
-            });
+                "Authorization": `Bearer ${auth.token}`}
+            );
+
         setForm({
             oldPassword: '',
             newPasswordOne: '',
             newPasswordTwo: ''
         });
+
         return message(data.message);
     };
 

@@ -1,13 +1,12 @@
-import {AuthContext, BalanceContext} from "../../../../../context/auth.context";
+import {AuthContext} from "../../../../../context/auth.context";
 import React, {useContext, useEffect, useState} from "react";
 import {useMessage} from "../../../../../hooks/message.hook";
 import {useHttp} from "../../../../../hooks/http.hook";
 import ipapi from "ipapi.co";
-import {storage} from "../../../../../storage.config";
+import path from "../../../../../path.config";
 
 export const PayeerContent = ({ props }) => {
     const { request, error, clearError } = useHttp(),
-        balance     = useContext(BalanceContext),
         message     = useMessage(),
         auth        = useContext(AuthContext);
 
@@ -35,19 +34,15 @@ export const PayeerContent = ({ props }) => {
         if(!props){
             if(form.USD >= 5){
                 const data = await request(
-                    '/user/profile/pay-in/payeer',
+                    path.payment + '/payeer',
                     "POST",
                     {
-                        ...form,
-                        ghs: form.USD
+                        number: `${form.number}`,
+                        money: +form.USD,
+                        ghs: +form.USD
                     },
-                    { token: auth.token }
+                    {"Authorization": `Bearer ${auth.token}`}
                 );
-
-                if(data && data.money){
-                    balance.setBalance(data.money);
-                    localStorage.setItem(storage.balance, JSON.stringify(data.money));
-                }
 
                 return message(data.message);
             }
@@ -57,13 +52,15 @@ export const PayeerContent = ({ props }) => {
             if(form.USD > 0.5) {
                 const location = async ip => {
                     const data = await request(
-                        '/user/pay-out/payeer',
+                        path.payout + '/payeer',
                         "POST",
                         {
-                            ...form,
-                            IP: ip
+                            number: `${form.number}`,
+                            money: +form.USD,
+                            IP: ip,
+                            exchange: 1
                         },
-                        {token: auth.token}
+                        {"Authorization": `Bearer ${auth.token}`}
                     );
 
                     message(data.message);

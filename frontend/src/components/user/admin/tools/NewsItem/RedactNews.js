@@ -34,9 +34,8 @@ export const RedactNews = ({props}) => {
                     {
                         title: itemNews.title,
                         text: itemNews.text
-                    }, {
-                        "Authorization": `Bearer ${token}`
-                    }
+                    },
+                    {"Authorization": `Bearer ${token}`}
                 );
 
                 if(News && News.message) {

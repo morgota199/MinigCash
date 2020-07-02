@@ -56,6 +56,7 @@ router.post('/register', [
         });
 
         await user.save();
+
         Mining(user);
 
         if(!ref.ref) return res.status(201).json({ message: "Пользователь создан" });

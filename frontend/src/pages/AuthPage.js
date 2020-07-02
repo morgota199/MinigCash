@@ -111,7 +111,11 @@ export const AuthPage = () => {
             const data = await request(
                 path.register,
                 "POST",
-                {...form, ref});
+                {
+                    ...form,
+                    reference: ref.ref
+                }
+            );
 
             message(data.message);
         } catch (e) {}

@@ -4,6 +4,7 @@ import {useHttp} from "../../../../hooks/http.hook";
 import {TablePay} from "./PayItem/TablePay";
 import {useCollapsible} from "../../../../hooks/collapsible.hook";
 import {usePagination} from "../../../../hooks/pagination.hook";
+import path from "../../../../path.config";
 
 import "../../../../style/ListPayContent.css"
 
@@ -22,9 +23,9 @@ export const PayToolsContent = () => {
     useEffect(() => {
         collapsible(document.querySelector(".collapsible"), {});
         (async () => {
-            const payData = await request('/user/get-all-pay', "POST", null, {token});
+            const payData = await request(path.payment_all_users);
 
-            const rev = payData.payData.reverse();
+            const rev = payData.reverse();
 
             setPay(rev);
 
